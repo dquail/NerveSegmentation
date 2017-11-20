@@ -157,7 +157,8 @@ The descriptions for the augmentation variables are as follows:
 
 
 
-\subsection{Results}
+\section{Results}
+Following are the results of predictions with different CNN architectures and variables.
 The training examples were randomly split. 80 percent were reserved for training, and the remaining 20 percent for testing the performance of the resulting model.
 
 A mask is created for each test example as seen below.
@@ -180,22 +181,46 @@ A mask is created for each test example as seen below.
   \label{fig:BPSegmentation3}
 \end{figure}
 
-The resulting dice coefficient (DCF) is used for a performance measure as well as the loss function. 
+The dice coefficient (DCF) is used for a performance measure as well as the loss function. 
 
-A DCF of 0.65 is achieved with a simple UNET architecture after 20 epochs of training with batch sizes of 32. 
+\subsection{Basic UNET}
+A basic UNET architecture as described in the 2 Dimensional UNET section above was used first. 
+
+For our initial UNET architecture, a DCF of 0.65 is achieved after 20 epochs of training with batch sizes of 32. 
 
  \begin{figure}[H]
-  \centerline{\includegraphics[width=0.5\textwidth]{Images/MRISegment.png}}
-  \caption{The resulting image segmentation after training}
-  \label{fig:mrisegment}
+  \centerline{\includegraphics[width=0.5\textwidth]{Plots/AverageErrorKullEvery5000.png}}
+  \caption{The accuracy of the segmentation prediction across epochs. An eventual coefficient of 0.67 is achieved after 20 epochs}
+  \label{fig:trainingovertime.}
+\end{figure}
+
+\subsection{UNET with data augmentation}
+Blah blah.
+ \begin{figure}[H]
+  \centerline{\includegraphics[width=0.5\textwidth]{Plots/AverageErrorKullEvery5000.png}}
+  \caption{Accuracy using a modified UNET architecture is improved over 20 epochs of training.}
+  \label{fig:trainingovertime2.}
+\end{figure}
+
+\subsection{Segnet}
+A UNET architecture is generally considered to be the most appropriate architecture for medical images because of the ability to make accurate predictions with relatively low volumes of training data. So we wanted to compare the results with a more basic fully connected convolutional neural network. A basic Segnet architecture was used for our training purposes. 
+
+ \begin{figure}[H]
+  \centerline{\includegraphics[width=0.5\textwidth]{Images/SegNetArchitecture.png}}
+  \caption{The architecture of a Segnet architecture.}
+  \label{fig:segnet}
 \end{figure}
 
 \section{Conclusions}
-This seems to be a promising approach for segmentation.
+The results using a UNET architecture are promising. That said, the score that was achieved is inferior to the best score for the Kaggle competition which was 0.73226. So there is work to be done to even get our UNET architecture to the state of the art. 
+
 \section{Future work}
-There are a number of different network configurations that could be considered. 
+There are a number of different network configurations that could be considered. Thoughts for improving the accuracy could include:
 \begin{itemize}
-  \item More than just UNET 
+  \item Changing the resolution of the images. Instead of 64X80 for example, you could try 80X112
+  \item Attempting other data augmentations including elastic transforms. 
+  \item Likely many more. I don't pretend to be an expert with tuning CNNs.
+  
 \end{itemize}
 \bibliographystyle{aaai}
 \bibliography{bibliography}
