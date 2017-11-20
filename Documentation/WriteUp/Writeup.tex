@@ -52,14 +52,20 @@ For the task of segmenting MRI data using our convolution neural network, we nee
 A Kaggle competition in 2016 made available a large training set of images where the Brachial Plexus (BP) nerve has been manually annotated in ultrasound images. The annotators were trained by experts and instructed to annotate images where they were confident about the existence of the BP landmark.. This data set inckudes images where the BP is not present, and as with any human-labeled data, will ocntain noise, artifacts, and potential mistakes from the ground truth. 
 
  \begin{figure}[H]
-  \centerline{\includegraphics[width=0.5\textwidth]{Images/Keras.png}}
+  \centerline{\includegraphics[width=0.5\textwidth]{Images/1_4.png}}
   \caption{An ultrasound image which includes the unlabelled BP.}
   \label{fig:BPInUltrasound}
 \end{figure}
 
  \begin{figure}[H]
-  \centerline{\includegraphics[width=0.5\textwidth]{Images/Keras.png}}
+  \centerline{\includegraphics[width=0.5\textwidth]{Images/1_4_mask.png}}
   \caption{The human labelled mask for the ultrasound of the BP.}
+  \label{fig:BPMask}
+\end{figure}
+
+ \begin{figure}[H]
+  \centerline{\includegraphics[width=0.5\textwidth]{Images/1_4_mask.png}}
+  \caption{An ultrasound image where there is no BP. The resulting BP labelled mask will contain no segmented data.}
   \label{fig:BPMask}
 \end{figure}
 
@@ -202,7 +208,7 @@ The descriptions for the augmentation variables are as follows:
 \end{figure}
 
 \subsection{Segnet}
-A UNET architecture is generally considered to be the most appropriate architecture for medical images because of the ability to make accurate predictions with relatively low volumes of training data. So we wanted to compare the results with a more basic fully connected convolutional neural network. A basic Segnet architecture was used for our training purposes. 
+A UNET architecture is generally considered to be the most appropriate architecture for medical images because of the ability to make accurate predictions with relatively low volumes of training data. So we wanted to compare the results with a more basic fully connected convolutional neural network. A basic Segnet architecture was used for our training purposes. It is not the intention of this paper to go into depth about the structure of a Segnet. More information can be found on the subject in other papers such as. 
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/SegNetArchitecture.png}}
@@ -210,8 +216,20 @@ A UNET architecture is generally considered to be the most appropriate architect
   \label{fig:segnet}
 \end{figure}
 
+
+The Segnet architecture was able to score a DCF of 0.51 after training of 20 epochs. 
+
+
+ \begin{figure}[H]
+  \centerline{\includegraphics[width=0.5\textwidth]{Plots/AverageErrorKullEvery5000.png}}
+  \caption{Accuracy using a Segnet architecture is improved over 20 epochs of training.}
+  \label{fig:trainingovertime2.}
+\end{figure}
+
+
 \section{Conclusions}
 The results using a UNET architecture are promising. That said, the score of 0.651 that was achieved is inferior to the best score for the Kaggle competition which was 0.73226. So there is work to be done to even get our UNET architecture to the state of the art. 
+
 
 \section{Future work}
 There are a number of different network configurations that could be considered. Thoughts for improving the accuracy could include:
