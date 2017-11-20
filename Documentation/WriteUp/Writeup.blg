@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: Writeup.aux
+The style file: aaai.bst
+Database file #1: bibliography.bib
+Warning--empty booktitle in representingknowledge
+You've used 5 entries,
+            2568 wiz_defined-function locations,
+            603 strings with 5578 characters,
+and the built_in function-call counts, 2043 in all, are:
+= -- 215
+> -- 88
+< -- 1
++ -- 30
+- -- 30
+* -- 151
+:= -- 347
+add.period$ -- 25
+call.type$ -- 5
+change.case$ -- 33
+chr.to.int$ -- 5
+cite$ -- 6
+duplicate$ -- 82
+empty$ -- 143
+format.name$ -- 36
+if$ -- 418
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 4
+newline$ -- 33
+num.names$ -- 15
+pop$ -- 34
+preamble$ -- 1
+purify$ -- 39
+quote$ -- 0
+skip$ -- 60
+stack$ -- 0
+substring$ -- 88
+swap$ -- 18
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 40
+warning$ -- 1
+while$ -- 15
+width$ -- 8
+write$ -- 70
+(There was 1 warning)

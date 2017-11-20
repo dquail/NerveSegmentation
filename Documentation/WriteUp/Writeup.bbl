@@ -1,0 +1,42 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Littman \bgroup \em et al.\egroup
+  }{2002}]{littman2002predictive}
+Littman, M.~L.; Sutton, R.~S.; Singh, S.; et~al.
+\newblock 2002.
+\newblock Predictive representations of state.
+\newblock {\em Advances in neural information processing systems} 2:1555--1562.
+
+\bibitem[\protect\citeauthoryear{Modayil \&
+  Sutton}{2014}]{modayil2014prediction}
+Modayil, J., and Sutton, R.~S.
+\newblock 2014.
+\newblock Prediction driven behavior: Learning predictions that drive fixed
+  responses.
+\newblock In {\em The AAAI-14 Workshop on Artificial Intelligence and Robotics,
+  Quebec City, Quebec, Canada}.
+
+\bibitem[\protect\citeauthoryear{Ring}{2017}]{representingknowledge}
+Ring, M.
+\newblock 2017.
+\newblock Representing knowledge as predictions.
+
+\bibitem[\protect\citeauthoryear{Sutton \bgroup \em et al.\egroup
+  }{2011}]{sutton2011horde}
+Sutton, R.~S.; Modayil, J.; Delp, M.; Degris, T.; Pilarski, P.~M.; White, A.;
+  and Precup, D.
+\newblock 2011.
+\newblock Horde: A scalable real-time architecture for learning knowledge from
+  unsupervised sensorimotor interaction.
+\newblock In {\em The 10th International Conference on Autonomous Agents and
+  Multiagent Systems-Volume 2},  761--768.
+\newblock International Foundation for Autonomous Agents and Multiagent
+  Systems.
+
+\bibitem[\protect\citeauthoryear{White}{2015}]{White:2015}
+White, A.
+\newblock 2015.
+\newblock {\em Developing a predictive approach to knowledge}.
+\newblock Ph.D. Dissertation, University of Alberta.
+
+\end{thebibliography}
