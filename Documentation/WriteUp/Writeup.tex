@@ -136,26 +136,6 @@ $$\sum_{i=1} H(yi', yi)$$
 \end{figure}
 
 
-\subsection{Data augmentation}
-The training data available for our task, therefore, we use excessive data augmentation by applying elastic deformations to the training images. This allows the network to learn invariance to deformations without seeing them in the segmentation training data. In biomedical segmentation, this is important, since deformation used to be the most common variation in tissue and these deformations can be simulated efficiently. 
-
- \begin{figure}[H]
-  \centerline{\includegraphics[width=0.5\textwidth]{Images/KerasDataAugmentation.png}}
-  \caption{Augmenting the image data using keras data augmentation abilities.}
-  \label{fig:unet3}
-\end{figure}
-
-The descriptions for the augmentation variables are as follows:
-
-\begin{itemize}
-  \item rotation\_range = Degree range for random rotations.
-  \item width\_shift\_range =  Range for random horizontal shifts. (fraction of total width). 
-  \item height\_shift\_range = Range for random vertical shifts. (fraction of total height)
-  \item shear\_range = Shear Intensity (Shear angle in counter-clockwise direction as radians)
-  \item zoom\_range = Range for random zoom.
-\end{itemize}
-
-
 
 \section{Results}
 Following are the results of predictions with different CNN architectures and variables.
@@ -186,16 +166,35 @@ The dice coefficient (DCF) is used for a performance measure as well as the loss
 \subsection{Basic UNET}
 A basic UNET architecture as described in the 2 Dimensional UNET section above was used first. 
 
-For our initial UNET architecture, a DCF of 0.65 is achieved after 20 epochs of training with batch sizes of 32. 
+For our initial UNET architecture, a DCF of 0.58 is achieved after 20 epochs of training with batch sizes of 32. 
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Plots/AverageErrorKullEvery5000.png}}
-  \caption{The accuracy of the segmentation prediction across epochs. An eventual coefficient of 0.67 is achieved after 20 epochs}
+  \caption{The accuracy of the segmentation prediction across epochs. An eventual coefficient of 0.58 is achieved after 20 epochs}
   \label{fig:trainingovertime.}
 \end{figure}
 
 \subsection{UNET with data augmentation}
-Blah blah.
+
+The training data available for our task, therefore, we use excessive data augmentation by applying elastic deformations to the training images. This allows the network to learn invariance to deformations without seeing them in the segmentation training data. In biomedical segmentation, this is important, since deformation used to be the most common variation in tissue and these deformations can be simulated efficiently. With data augmentation, the DCF improves to 0.651.
+
+ \begin{figure}[H]
+  \centerline{\includegraphics[width=0.5\textwidth]{Images/KerasDataAugmentation.png}}
+  \caption{Augmenting the image data using keras data augmentation abilities.}
+  \label{fig:unet3}
+\end{figure}
+
+The descriptions for the augmentation variables are as follows:
+
+\begin{itemize}
+  \item rotation\_range = Degree range for random rotations.
+  \item width\_shift\_range =  Range for random horizontal shifts. (fraction of total width). 
+  \item height\_shift\_range = Range for random vertical shifts. (fraction of total height)
+  \item shear\_range = Shear Intensity (Shear angle in counter-clockwise direction as radians)
+  \item zoom\_range = Range for random zoom.
+\end{itemize}
+
+
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Plots/AverageErrorKullEvery5000.png}}
   \caption{Accuracy using a modified UNET architecture is improved over 20 epochs of training.}
@@ -212,7 +211,7 @@ A UNET architecture is generally considered to be the most appropriate architect
 \end{figure}
 
 \section{Conclusions}
-The results using a UNET architecture are promising. That said, the score that was achieved is inferior to the best score for the Kaggle competition which was 0.73226. So there is work to be done to even get our UNET architecture to the state of the art. 
+The results using a UNET architecture are promising. That said, the score of 0.651 that was achieved is inferior to the best score for the Kaggle competition which was 0.73226. So there is work to be done to even get our UNET architecture to the state of the art. 
 
 \section{Future work}
 There are a number of different network configurations that could be considered. Thoughts for improving the accuracy could include:
