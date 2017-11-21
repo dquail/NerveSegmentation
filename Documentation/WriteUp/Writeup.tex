@@ -175,17 +175,16 @@ A basic UNET architecture as described in the 2 Dimensional UNET section above w
 For our initial UNET architecture, a DCF of 0.58 is achieved after 20 epochs of training with batch sizes of 32. 
 
  \begin{figure}[H]
-  \centerline{\includegraphics[width=0.5\textwidth]{Plots/AverageErrorKullEvery5000.png}}
-  \caption{The accuracy of the segmentation prediction across epochs. An eventual coefficient of 0.58 is achieved after 20 epochs}
-  \label{fig:trainingovertime.}
+  \centerline{\includegraphics[width=0.5\textwidth]{Plots/UNETSimple20.png}}
+  \caption{Augmenting the image data using keras data augmentation abilities.}
+  \label{fig:unet3}
 \end{figure}
-
 \subsection{UNET with data augmentation}
 
 The training data available for our task, therefore, we use excessive data augmentation by applying elastic deformations to the training images. This allows the network to learn invariance to deformations without seeing them in the segmentation training data. In biomedical segmentation, this is important, since deformation used to be the most common variation in tissue and these deformations can be simulated efficiently. With data augmentation, the DCF improves to 0.651.
 
  \begin{figure}[H]
-  \centerline{\includegraphics[width=0.5\textwidth]{Images/KerasDataAugmentation.png}}
+  \centerline{\includegraphics[width=0.5\textwidth]{Plots/UNETSimple20Augmented.png}}
   \caption{Augmenting the image data using keras data augmentation abilities.}
   \label{fig:unet3}
 \end{figure}
@@ -208,7 +207,9 @@ The descriptions for the augmentation variables are as follows:
 \end{figure}
 
 \subsection{Segnet}
-A UNET architecture is generally considered to be the most appropriate architecture for medical images because of the ability to make accurate predictions with relatively low volumes of training data. So we wanted to compare the results with a more basic fully connected convolutional neural network. A basic Segnet architecture was used for our training purposes. It is not the intention of this paper to go into depth about the structure of a Segnet. More information can be found on the subject in other papers such as. 
+A UNET architecture is generally considered to be the most appropriate architecture for medical images because of the ability to make accurate predictions with relatively low volumes of training data. So we wanted to compare the results with a more basic fully connected convolutional neural network. A basic Segnet architecture was used for our training purposes. It is not the intention of this paper to go into depth about the structure of a Segnet. More information can be found on the subject in other papers such as. However, it is worth giving a very basic description of a SegNet. 
+
+A novelty of SegNet  is the way in which the decoder upsamples its lower resolution input feature maps. The decoder uses pooling indices computed in the max-pooling step of the corresponding encoder to perform upsampling. By doing so, the need for learning to upsample is removed. The resulting upsampled maps are then convolved with trainable filters producing dense feature maps. 
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/SegNetArchitecture.png}}
@@ -217,22 +218,51 @@ A UNET architecture is generally considered to be the most appropriate architect
 \end{figure}
 
 
-The Segnet architecture was able to score a DCF of 0.51 after training of 20 epochs. 
+The Segnet architecture was able to score a DCF of 0.51 after training of 20 epochs. This is quite close to the UNET architecture which was somewhat surprising. The reason that they may be close is likely in the fact that the training data is actually quite significant in this challenge. The strength of the UNET architecture is in that it requires very few training examples.
 
 
  \begin{figure}[H]
-  \centerline{\includegraphics[width=0.5\textwidth]{Plots/AverageErrorKullEvery5000.png}}
-  \caption{Accuracy using a Segnet architecture is improved over 20 epochs of training.}
+  \centerline{\includegraphics[width=0.5\textwidth]{Plots/SegNet.png}}
+  \caption{Accuracy using a Segnet architecture is comparable to a UNET architecture}
+  \label{fig:trainingovertime2.}
+\end{figure}
+
+To further test the idea that the UNET architecture remains performant on minimal data, we decreased the test data by an order of magnitude and re-ran training and prediction for both UNET and Segnet architectures. 
+
+The UNET architectures performance decreased by 5 percent while the Segnet architecture degraded by 30 percent.
+
+ \begin{figure}[H]
+  \centerline{\includegraphics[width=0.5\textwidth]{Plots/SegNet.png}}
+  \caption{Accuracy using a Segnet architecture with less training data}
+  \label{fig:trainingovertime2.}
+\end{figure}
+
+ \begin{figure}[H]
+  \centerline{\includegraphics[width=0.5\textwidth]{Plots/SegNet.png}}
+  \caption{Accuracy of a UNET with less training data. Note that the performance is not impacted as much with less data.}
   \label{fig:trainingovertime2.}
 \end{figure}
 
 
+
 \section{Conclusions}
-The results using a UNET architecture are promising. That said, the score of 0.651 that was achieved is inferior to the best score for the Kaggle competition which was 0.73226. So there is work to be done to even get our UNET architecture to the state of the art. 
+The results using a UNET architecture are promising and demonstrate it's strengths in medical image segmentation. Given small amounts of training data, it out performed the Segnet architecture, which is unsurprising. With large amounts of data, it still outperformed the Segnet by a significant margin, which is somewhat surprising. 
 
 
 \section{Future work}
 There are a number of different network configurations that could be considered. Thoughts for improving the accuracy could include:
+\begin{itemize}
+  \item Fully Convolutional Network 8, 16, 32
+  \item Fully Convolutional DenseNet
+  \item Mask R-CNN
+  \item PSPNet
+  \item RefineNet
+  \item G-FRNet
+  \item DecoupleNet
+  
+  
+\end{itemize}
+In addition to trying other network structures, one could attempt to tune the parameters of each network in many different ways including:
 \begin{itemize}
   \item Changing the resolution of the images. Instead of 64X80 for example, you could try 80X112
   \item Attempting other data augmentations including elastic transforms. 
