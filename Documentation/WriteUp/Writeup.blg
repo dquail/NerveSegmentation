@@ -1,48 +1,46 @@
 This is BibTeX, Version 0.99d (TeX Live 2016)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: Writeup.aux
-I found no \citation commands---while reading file Writeup.aux
-I found no \bibdata command---while reading file Writeup.aux
-I found no \bibstyle command---while reading file Writeup.aux
-You've used 0 entries,
-            0 wiz_defined-function locations,
-            83 strings with 488 characters,
-and the built_in function-call counts, 0 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 0
-:= -- 0
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
-chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 0
-format.name$ -- 0
-if$ -- 0
-int.to.chr$ -- 0
+The style file: aaai.bst
+Database file #1: bibliography.bib.bib
+You've used 1 entry,
+            2568 wiz_defined-function locations,
+            581 strings with 4805 characters,
+and the built_in function-call counts, 578 in all, are:
+= -- 63
+> -- 18
+< -- 1
++ -- 6
+- -- 6
+* -- 39
+:= -- 90
+add.period$ -- 6
+call.type$ -- 1
+change.case$ -- 7
+chr.to.int$ -- 1
+cite$ -- 1
+duplicate$ -- 25
+empty$ -- 43
+format.name$ -- 9
+if$ -- 127
+int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 0
-num.names$ -- 0
-pop$ -- 0
-preamble$ -- 0
-purify$ -- 0
+missing$ -- 1
+newline$ -- 10
+num.names$ -- 3
+pop$ -- 7
+preamble$ -- 1
+purify$ -- 8
 quote$ -- 0
-skip$ -- 0
+skip$ -- 22
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
-text.length$ -- 0
+substring$ -- 37
+swap$ -- 11
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 0
+type$ -- 8
 warning$ -- 0
-while$ -- 0
-width$ -- 0
-write$ -- 0
-(There were 3 error messages)
+while$ -- 5
+width$ -- 2
+write$ -- 18

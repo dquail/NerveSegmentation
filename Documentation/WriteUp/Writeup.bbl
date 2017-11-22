@@ -1,0 +1,12 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Ronneberger, Fischer, \&
+  Brox}{2015}]{ronneberger2015u}
+Ronneberger, O.; Fischer, P.; and Brox, T.
+\newblock 2015.
+\newblock U-net: Convolutional networks for biomedical image segmentation.
+\newblock In {\em International Conference on Medical Image Computing and
+  Computer-Assisted Intervention},  234--241.
+\newblock Springer.
+
+\end{thebibliography}
