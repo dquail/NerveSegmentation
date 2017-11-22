@@ -12,16 +12,16 @@ dquail@ualberta.ca}
 \begin{document}
 \maketitle
 \begin{abstract}
-Pain management through the use of indwelling catheters that block or mitigate pain source, is a promising alternative to narcotics, which bring on a bevy of unwanted side effects. Accurate identification of nerve structures in ultrasound images is a fundamental step in effectively inserting a catheter into a patient requiring pain management. In this paper, we look into several different convolutional neural networks and compare their ability to segment the brachial plexus from an ultrasound image of a patient. 
+Pain management through the use of indwelling catheters that block or mitigate pain source, is a promising alternative to narcotics, which bring on several unwanted side effects. Accurate identification of nerve structures in ultrasound images is a fundamental step in effectively inserting a catheter into a patient requiring pain management. In this paper, we look into using a UNET convolutional neural network's ability to segment the brachial plexus from an ultrasound image of a patient, and compare it with a more traditional type of convolutional neural network performing the same segmentation task. 
 \end{abstract}
     
 \section{Background}
 
-Pain control post surgery is a priority for health care providers. In addition to keeping the patient comfortable, pain management has other benefits. Pain control can help speed recover and may reduce the risk of developing certain complications after surgery, including blood clots and pneumonia. This is because, if pain is controlled, patients will be more able to complete tasks such as walking and deep breathing exercises.
+Pain control in post surgery settings is a priority for health care providers. In addition to keeping the patient comfortable, pain management has other benefits. Pain control can help speed recover and may reduce the risk of developing certain complications after surgery, including blood clots and pneumonia. This is because, if pain is controlled, patients will be more able to complete tasks such as walking and deep breathing exercises.
 
 The most common treatment of pain is the administration of narcotics. But these narcotics have a significant downside. These side effects include nausea, itching, and drowsiness. 
 
-A promising alternative to pain control is creating a nerve block. Unlike an epidural which controls pain over a large region of your body, a nerve block controls pain in a smaller region of the body, such as a limb. The nerve block is created by placing thin catheter The main advantage of these nerve blocks is that they avoid the side effects common to narcotics stated above.
+A promising alternative to pain control is creating a nerve block. Unlike an epidural which controls pain over a large region of your body, a nerve block controls pain in a smaller region of the body, such as a limb. The nerve block is created by placing thin catheter The main advantage of these nerve blocks is that they avoid the side effects caused by narcotics, as stated above.
 
 Creating a nerve block is done by using a needle to place a small catheter in the appropriate nerve. The main challenge in doing so is isolating the appropriate insertion place. Current methods involve using an ultrasound in real time to identify a nerve structure such as the brachial plexus. This requires the knowledge of a highly trained radiologist, and even then, is error prone. For these reasons, a less manual, and more accurate approach is desired. 
 
@@ -49,11 +49,11 @@ In this paper, we explore using a convolutional neural networks (CNN) to segment
 For the task of segmenting MRI data using our convolution neural network, we needed to consider the training data, as well as the network infrastructure for training and prediction.
 
 \subsection{The data}
-A Kaggle competition in 2016 made available a large training set of images where the Brachial Plexus (BP) nerve has been manually annotated in ultrasound images. The annotators were trained by experts and instructed to annotate images where they were confident about the existence of the BP landmark.. This data set inckudes images where the BP is not present, and as with any human-labeled data, will ocntain noise, artifacts, and potential mistakes from the ground truth. 
+A Kaggle competition in 2016 made available a large training set of images where the Brachial Plexus (BP) nerve has been manually annotated in ultrasound images. The annotators were trained by experts and instructed to annotate images where they were confident about the existence of the BP landmark.. This data set includes images where the BP is not present, and as with any human-labeled data, will contain noise, artifacts, and potential mistakes from the ground truth. 
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/1_4.png}}
-  \caption{An ultrasound image which includes the unlabelled BP.}
+  \caption{An ultrasound image which includes the unlabelled BP. To an untrained eye, spotting the Brachial Plexus is extremely difficult.}
   \label{fig:BPInUltrasound}
 \end{figure}
 
@@ -78,9 +78,9 @@ In order to build the different convolutional neural networks used to segment th
   \label{fig:keras}
 \end{figure}
 
-Experiments were run using an amazon EC2 instance with a GPU using cuDNN - a deep neural network GPU accelerated library. This approach is much faster than a typical CPU because of the parallel computation it was designed form,
+Experiments were run using an Amazon EC2 instance with a GPU using cuDNN - a deep neural network GPU accelerated library. This approach is much faster than a typical CPU because of the parallel computation it was designed form,
 
-\section{2 Dimensional UNET CNN}
+\section{2 Dimensional U-NET CNN}
 
 \subsection{Network design}
 The U-Net is a network design that relies on strong use of data augmentation to use the available annotated samples more efficiently. The architecture contains a contracting path which captures context and a symmetric expanding path that enables precise localization. It is called a "U-net" because of it's "U" shaped network structure.
@@ -93,7 +93,7 @@ The U-Net is a network design that relies on strong use of data augmentation to 
 \end{figure}
 
 As seen above, the U-Net network takes a raw image as input and outputs an output segmentation map. 
-It's overall architecture is illustrated below. Like any convolutional neural network, it consists of a number of small operations, each of which corresponding to a small arrow below. The image file is input into the network and the propogated through the network along all possible paths,  and at the end, the ready segmentation map is output.
+It's overall architecture is illustrated above. Like any convolutional neural network, it consists of a number of small operations, each of which corresponding to a small arrow. The image file is input into the network and the propagated through the network along all possible paths,  and at the end, the ready segmentation map is output.
 
 Each blue box corresponds to a multi channel feature layer. Most of the operations are convolutions followed by a non-linear feature activation. 
 
@@ -105,7 +105,7 @@ Below is a diagram detailing one of the first convolution layer. The layer conta
   \label{fig:unet1}
 \end{figure}
 
-Max pooling operations as seen below are illustrated with down arrows in the architecture diagram. It reduces the x, y size of the feature map. This max pooling operation operates on each channel separately.  This simply propogates the maximum activation from each 2X2 window to the next feature map. After each max pooling operation, the number of feature channels are increased by a factor of 2. All in all, these convolution and pooling operations gradually increase the "what" and decrease the "where." In other words, it is able to identify shift and space invariant features. 
+Max pooling operations as seen below are illustrated with down arrows in the architecture diagram. It reduces the x, y size of the feature map. This max pooling operation operates on each channel separately.  This simply propagates the maximum activation from each 2X2 window to the next feature map. After each max pooling operation, the number of feature channels are increased by a factor of 2. All in all, these convolution and pooling operations gradually increase the "what" and decrease the "where." In other words, it is able to identify shift and space invariant features. 
 
 
  \begin{figure}[H]
@@ -127,17 +127,18 @@ The following is the Python code used to create the UNET.
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/KerasUNET.png}}
-  \caption{Creating the UNET using keras and tensorflow.}
+  \caption{Creating the UNET using Keras and Tensorflow.}
   \label{fig:kerasunet3}
 \end{figure}
 
-A dice coeficcient loss function is used. 
+A Dice coefficient (also known as Sorensen Index) is used as a loss function. The index is intended to be applied as an indicator of presence / absence of data, and over all, is a statistic used to compare the similarity of two samples. In this case, the samples are the prediction output, and the ground truth of the segmented pixels.   
 
-$$\sum_{i=1} H(yi', yi)$$
+$$DCF = \frac{2 |  X \cap Y | }{ | X | + | Y |} $$
+
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/UNETMedical.png}}
-  \caption{A U-Net architecture in a more abstract form. The actual number of feature maps illustrated is symbolic. The green arrows do unsampling and black ones keep the original size of input, while arrows marked red are blocks of layers that downsample their input. The cyan arrows are long skip connections which concatenate feature maps from the first stage to feature maps in the second stage. This results in the expanding path having access to twice as many features as the contracting path.}
+  \caption{A U-Net architecture in a more abstract form. The actual number of feature maps illustrated is symbolic. The green arrows do un-sampling and black ones keep the original size of input, while arrows marked red are blocks of layers that down-sample their input. The cyan arrows are long skip connections which concatenate feature maps from the first stage to feature maps in the second stage. This results in the expanding path having access to twice as many features as the contracting path.}
   \label{fig:kerasunet3}
 \end{figure}
 
@@ -198,13 +199,6 @@ The descriptions for the augmentation variables are as follows:
   \item shear\_range = Shear Intensity (Shear angle in counter-clockwise direction as radians)
   \item zoom\_range = Range for random zoom.
 \end{itemize}
-
-
- \begin{figure}[H]
-  \centerline{\includegraphics[width=0.5\textwidth]{Plots/AverageErrorKullEvery5000.png}}
-  \caption{Accuracy using a modified UNET architecture is improved over 20 epochs of training.}
-  \label{fig:trainingovertime2.}
-\end{figure}
 
 \subsection{Segnet}
 A UNET architecture is generally considered to be the most appropriate architecture for medical images because of the ability to make accurate predictions with relatively low volumes of training data. So we wanted to compare the results with a more basic fully connected convolutional neural network. A basic Segnet architecture was used for our training purposes. It is not the intention of this paper to go into depth about the structure of a Segnet. More information can be found on the subject in other papers such as. However, it is worth giving a very basic description of a SegNet. 
