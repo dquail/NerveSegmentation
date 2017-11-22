@@ -21,9 +21,9 @@ Pain control in post surgery settings is a priority for health care providers. I
 
 The most common treatment of pain is the administration of narcotics. But these narcotics have a significant downside. These side effects include nausea, itching, and drowsiness. 
 
-A promising alternative to pain control is creating a nerve block. Unlike an epidural which controls pain over a large region of your body, a nerve block controls pain in a smaller region of the body, such as a limb. The nerve block is created by placing thin catheter The main advantage of these nerve blocks is that they avoid the side effects caused by narcotics, as stated above.
+A promising alternative to pain control is creating a nerve block. Unlike an epidural which controls pain over a large region of your body, a nerve block controls pain in a smaller region of the body, such as a limb. The nerve block is created by placing a thin catheter in the appropriate nerve region. The main advantage of these nerve blocks is that they avoid the side effects caused by narcotics, as stated above.
 
-Creating a nerve block is done by using a needle to place a small catheter in the appropriate nerve. The main challenge in doing so is isolating the appropriate insertion place. Current methods involve using an ultrasound in real time to identify a nerve structure such as the brachial plexus. This requires the knowledge of a highly trained radiologist, and even then, is error prone. For these reasons, a less manual, and more accurate approach is desired. 
+Creating a nerve block is done by using a needle to place a small catheter in the appropriate region. The main challenge in doing so is isolating the appropriate insertion place. Current methods involve using an ultrasound in real time to identify a nerve structure such as the brachial plexus. This requires the knowledge of a highly trained radiologist, and even then, is error prone. For these reasons, a less manual, and more accurate approach is desired. 
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/UltrasoundNerve.png}}
@@ -33,7 +33,7 @@ Creating a nerve block is done by using a needle to place a small catheter in th
 
 A convolutional neural network (CNN) is a class of deep, feed forward artificial neural network that has been used successfully for analyzing visual imagery. They are inspired by biological processes represented within the visual cortex and in recent years, have demonstrated promise in medical image segmentation. 
 
-These networks are known to be shift and space invariant and can learn filters that were hand engineered in traditional algorithms. This independence from prior knowledge and human effort in feature design makes them an excellent makes them an excellent candidate for an approach to automatic segmentation of nerves in ultrasound images. 
+These networks are known to be shift and space invariant and can learn filters that were hand engineered in traditional algorithms. This independence from prior knowledge and human effort in feature design makes them an excellent candidate for an approach to automatic segmentation of nerves in ultrasound images. 
 
 
 
@@ -43,7 +43,7 @@ These networks are known to be shift and space invariant and can learn filters t
   \label{fig:cnnarchitecture}
 \end{figure}
 
-In this paper, we explore using a convolutional neural networks (CNN) to segment these ultrasound images. A UNET structure is considered the strongest for medical images because it applies a fully connected convolutional network architecture in a way the most use out of limited data, We will tune parameters within the UNET and compare its  performance to a simple Segnet structure 
+In this paper, we explore using a convolutional neural networks (CNN) to segment these ultrasound images. A UNET structure is considered the strongest for medical images because it applies a fully connected convolutional network architecture in a way that makes the most use out of limited data, We will tune parameters within the UNET and compare its  performance to a simple Segnet structure 
 
 \section{Experimental Setup}
 For the task of segmenting MRI data using our convolution neural network, we needed to consider the training data, as well as the network infrastructure for training and prediction.
@@ -64,7 +64,7 @@ A Kaggle competition in 2016 made available a large training set of images where
 \end{figure}
 
  \begin{figure}[H]
-  \centerline{\includegraphics[width=0.5\textwidth]{Images/1_4_mask.png}}
+  \centerline{\includegraphics[width=0.5\textwidth]{Images/1_5NoNerve.png}}
   \caption{An ultrasound image where there is no BP. The resulting BP labelled mask will contain no segmented data.}
   \label{fig:BPMask}
 \end{figure}
@@ -83,12 +83,12 @@ Experiments were run using an Amazon EC2 instance with a GPU using cuDNN - a dee
 \section{2 Dimensional U-NET CNN}
 
 \subsection{Network design}
-The U-Net is a network design that relies on strong use of data augmentation to use the available annotated samples more efficiently. The architecture contains a contracting path which captures context and a symmetric expanding path that enables precise localization. It is called a "U-net" because of it's "U" shaped network structure.
+The U-Net is a network design that relies on strong use of data augmentation to maximize the effect of the available annotated samples without overfitting the model. The architecture contains a contracting path which captures context and a symmetric expanding path that enables precise localization. It is called a "U-net" because of it's "U" shaped network structure.
 
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/UNET.png}}
-  \caption{U-Net architecture.}
+  \caption{The high level basic U-Net architecture. The network gets its name from its U shape.}
   \label{fig:unet}
 \end{figure}
 
@@ -101,11 +101,11 @@ Below is a diagram detailing one of the first convolution layer. The layer conta
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/UNET1.png}}
-  \caption{Convolution layer.}
+  \caption{Convolution layer. Note that this diagram illustrates a 3X3 convolution layer with 3 channels. Since our ultrasound images are black and white, we will only be convolving 1 channel.}
   \label{fig:unet1}
 \end{figure}
 
-Max pooling operations as seen below are illustrated with down arrows in the architecture diagram. It reduces the x, y size of the feature map. This max pooling operation operates on each channel separately.  This simply propagates the maximum activation from each 2X2 window to the next feature map. After each max pooling operation, the number of feature channels are increased by a factor of 2. All in all, these convolution and pooling operations gradually increase the "what" and decrease the "where." In other words, it is able to identify shift and space invariant features. 
+Max pooling operations as seen below are illustrated with down arrows in the architecture diagram. It reduces the x, y size of the feature map. This max pooling operation operates on each channel separately.  This simply propagates the maximum activation from each 2X2 window to the next feature map. After each max pooling operation, the number of feature channels are increased by a factor of 2. All in all, these convolution and pooling operations gradually increase the ``what" and decrease the ``where." In other words, it is able to identify shift and space invariant features. 
 
 
  \begin{figure}[H]
@@ -118,7 +118,7 @@ Finally, after these contraction operations, expansion operations are performed 
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/UNET3.png}}
-  \caption{Expansion of the image}
+  \caption{Expansion of the image back to its original resolution.}
   \label{fig:unet3}
 \end{figure}
 
@@ -135,6 +135,7 @@ A Dice coefficient (also known as Sorensen Index) is used as a loss function. Th
 
 $$DCF = \frac{2 |  X \cap Y | }{ | X | + | Y |} $$
 
+A more illustrative diagram of how a U-Net is constructed for the segmentation of a medical image is seen below. 
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/UNETMedical.png}}
@@ -145,10 +146,11 @@ $$DCF = \frac{2 |  X \cap Y | }{ | X | + | Y |} $$
 
 
 \section{Results}
-Following are the results of predictions with different CNN architectures and variables.
-The training examples were randomly split. 80 percent were reserved for training, and the remaining 20 percent for testing the performance of the resulting model.
+The results for each experiment used the dice coefficient as a measure of accuracy. This is appropriate since it is a good statistic for measuring the similarity between the predicted BP pixels, and the ground truth BP pixels according to the training masks. 
 
-A mask is created for each test example as seen below.
+For each experiment, the training examples were randomly split. 80 percent were reserved for training, and the remaining 20 percent for testing the performance of the resulting model.
+
+After the model has been trained, a mask is created for each test image. Examples of such masks are seen below.
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/SegmentExample1.png}}
@@ -171,24 +173,23 @@ A mask is created for each test example as seen below.
 The dice coefficient (DCF) is used for a performance measure as well as the loss function. 
 
 \subsection{Basic UNET}
-A basic UNET architecture as described in the 2 Dimensional UNET section above was used first. 
+A basic UNET architecture as described in the 2 Dimensional UNET section above was used first. As with all experiments, the Kaggle training data was split into training examples (80 percent) and test examples (20 percent).  The CNN was trained against the training set and the its performance measured using the test examples. 
 
 For our initial UNET architecture, a DCF of 0.58 is achieved after 20 epochs of training with batch sizes of 32. 
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Plots/UNETSimple20.png}}
-  \caption{Augmenting the image data using keras data augmentation abilities.}
+  \caption{The learning curve over 20 epochs of training for a CNN with a basic UNET architecture.}
   \label{fig:unet3}
 \end{figure}
+
 \subsection{UNET with data augmentation}
 
-The training data available for our task, therefore, we use excessive data augmentation by applying elastic deformations to the training images. This allows the network to learn invariance to deformations without seeing them in the segmentation training data. In biomedical segmentation, this is important, since deformation used to be the most common variation in tissue and these deformations can be simulated efficiently. With data augmentation, the DCF improves to 0.651.
+Although a strength of UNET architectures is their supposed ability to perform accurately with minimal training data, we wanted to see how augmenting the training examples would effect the results. Doing so would theoretically allow the network to learn invariance to deformations without seeing them in the segmentation training data. In biomedical segmentation, this is important, since deformation used to be the most common variation in tissue and these deformations can be simulated efficiently. 
 
- \begin{figure}[H]
-  \centerline{\includegraphics[width=0.5\textwidth]{Plots/UNETSimple20Augmented.png}}
-  \caption{Augmenting the image data using keras data augmentation abilities.}
-  \label{fig:unet3}
-\end{figure}
+Keras was used to apply transformations in the following manner:
+
+Data augmentation here
 
 The descriptions for the augmentation variables are as follows:
 
@@ -200,8 +201,16 @@ The descriptions for the augmentation variables are as follows:
   \item zoom\_range = Range for random zoom.
 \end{itemize}
 
+With data augmentation, the DCF improves to 0.698.
+
+ \begin{figure}[H]
+  \centerline{\includegraphics[width=0.5\textwidth]{Plots/UNETSimple20Augmented.png}}
+  \caption{The learning rate when augmenting the image data using keras data augmentation abilities over 20 epochs of training.}
+  \label{fig:unet3}
+\end{figure}
+
 \subsection{Segnet}
-A UNET architecture is generally considered to be the most appropriate architecture for medical images because of the ability to make accurate predictions with relatively low volumes of training data. So we wanted to compare the results with a more basic fully connected convolutional neural network. A basic Segnet architecture was used for our training purposes. It is not the intention of this paper to go into depth about the structure of a Segnet. More information can be found on the subject in other papers such as. However, it is worth giving a very basic description of a SegNet. 
+As stated before, a UNET architecture is generally considered to be the most appropriate architecture for medical images because of the ability to make accurate predictions with relatively low volumes of training data. So we wanted to compare the results with a more basic fully connected convolutional neural network. A basic Segnet architecture was used for our training purposes. It is not the intention of this paper to go into depth about the structure of a Segnet. More information can be found on the subject in other papers such as "SegNet: A Deep Convolutional Encoder-Decoder Architecture for Image Segmentation." However, it is worth giving a very basic description of a SegNet. 
 
 A novelty of SegNet  is the way in which the decoder upsamples its lower resolution input feature maps. The decoder uses pooling indices computed in the max-pooling step of the corresponding encoder to perform upsampling. By doing so, the need for learning to upsample is removed. The resulting upsampled maps are then convolved with trainable filters producing dense feature maps. 
 
@@ -212,7 +221,7 @@ A novelty of SegNet  is the way in which the decoder upsamples its lower resolut
 \end{figure}
 
 
-The Segnet architecture was able to score a DCF of 0.51 after training of 20 epochs. This is quite close to the UNET architecture which was somewhat surprising. The reason that they may be close is likely in the fact that the training data is actually quite significant in this challenge. The strength of the UNET architecture is in that it requires very few training examples.
+With no data augmentation, the Segnet architecture was able to score a DCF of 0.54 after training of 20 epochs. This is quite close to the UNET architecture which was somewhat surprising. The reason that they may be close is likely in the fact that the training data is actually quite significant in this challenge. The strength of the UNET architecture is in that it requires very few training examples.
 
 
  \begin{figure}[H]
@@ -223,28 +232,50 @@ The Segnet architecture was able to score a DCF of 0.51 after training of 20 epo
 
 To further test the idea that the UNET architecture remains performant on minimal data, we decreased the test data by an order of magnitude and re-ran training and prediction for both UNET and Segnet architectures. 
 
-The UNET architectures performance decreased by 5 percent while the Segnet architecture degraded by 30 percent.
+\subsection{UNET with only 100 training examples}
+Given only 100 training examples rather than 2300, the UNET architectures performance decreased by 5 percent to a DCF of 0.53. 
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Plots/SegNet.png}}
-  \caption{Accuracy using a Segnet architecture with less training data}
+  \caption{Accuracy using a UNET architecture with only 100 training examples.}
   \label{fig:trainingovertime2.}
 \end{figure}
 
+\subsection{Segnet with only 100 training examples}
+Given only 100 training examples, the performance of the Segnet architecture suffers much more than the UNET architecture did under similar training example constraints. The performance went from a DCF of 0.54 to 0.42.
+ 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Plots/SegNet.png}}
   \caption{Accuracy of a UNET with less training data. Note that the performance is not impacted as much with less data.}
   \label{fig:trainingovertime2.}
 \end{figure}
 
+\subsection{Overall comparisons}
+Overall, the UNET architecture performed best. But it's strength was demonstrated when applied to a minimal amount of training examples. 
+
+\begin{tabular}{ |p{1.5cm}||p{2cm}|p{1.5cm}|p{1cm}|  }
+ \hline
+ \multicolumn{3}{|c|}{Results after trainingt} \\
+ \hline
+Network    & Training size & Augment & DCF \\
+ \hline
+ UNET   & 2399    & NO & 0.54\\
+ UNET   & 2399    & YES & 0.59\\
+ UNET   & 100    & NO & 0.51\\ 
+ Segnet   & 2399    & NO & 0.54\\
+ Segnet   & 2399    & YES & 0.59\\
+ Segnet   & 100    & NO & 0.51\\ 
+ \hline
+\end{tabular}
+
 
 
 \section{Conclusions}
-The results using a UNET architecture are promising and demonstrate it's strengths in medical image segmentation. Given small amounts of training data, it out performed the Segnet architecture, which is unsurprising. With large amounts of data, it still outperformed the Segnet by a significant margin, which is somewhat surprising. 
+The results using a UNET architecture are promising and demonstrate it's strengths in medical image segmentation. Given small amounts of training data, it out performed the Segnet architecture, which is unsurprising. With large amounts of data, it still outperformed the Segnet by a significant margin, which is somewhat surprising. Our experiments showed a best DCF score of 0.59, which is significantly lower than the best score during the Kaggle competition which was 0.73226. Our score would have placed us just inside the top 100 out of over 900 entries. So there would still be lots of work left to bring our UNET to a best in class structure. That said, the purpose of this research wasn't necessarily to create the best performance on this segmentation task. But rather to compare different CNN architectures. Specifically the architecture specifically designed for medical images, with a more generic simpler segmentation architecture. While not creating a world class CNN for this segmentation task, our findings demonstrate some of the strengths of a UNET for segmentation of medical images. 
 
 
 \section{Future work}
-There are a number of different network configurations that could be considered. Thoughts for improving the accuracy could include:
+To truly demonstrate the UNETs as a leader for medical images, it needs to be compared against many more network architectures, beyond just the Segnet. The list of competitive networks isn't short; just some of the other networks include:
 \begin{itemize}
   \item Fully Convolutional Network 8, 16, 32
   \item Fully Convolutional DenseNet
@@ -256,6 +287,7 @@ There are a number of different network configurations that could be considered.
   
   
 \end{itemize}
+
 In addition to trying other network structures, one could attempt to tune the parameters of each network in many different ways including:
 \begin{itemize}
   \item Changing the resolution of the images. Instead of 64X80 for example, you could try 80X112
