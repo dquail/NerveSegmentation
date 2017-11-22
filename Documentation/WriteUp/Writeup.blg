@@ -2,45 +2,48 @@ This is BibTeX, Version 0.99d (TeX Live 2016)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: Writeup.aux
 The style file: aaai.bst
-Database file #1: bibliography.bib.bib
-You've used 1 entry,
+Database file #1: bibliography.bib
+Warning--to sort, need author or key in kagglenerve
+Warning--empty year in kagglenerve
+You've used 2 entries,
             2568 wiz_defined-function locations,
-            581 strings with 4805 characters,
-and the built_in function-call counts, 578 in all, are:
-= -- 63
-> -- 18
+            585 strings with 4921 characters,
+and the built_in function-call counts, 805 in all, are:
+= -- 87
+> -- 19
 < -- 1
 + -- 6
 - -- 6
-* -- 39
-:= -- 90
-add.period$ -- 6
-call.type$ -- 1
-change.case$ -- 7
-chr.to.int$ -- 1
-cite$ -- 1
-duplicate$ -- 25
-empty$ -- 43
+* -- 55
+:= -- 115
+add.period$ -- 9
+call.type$ -- 2
+change.case$ -- 11
+chr.to.int$ -- 2
+cite$ -- 5
+duplicate$ -- 35
+empty$ -- 69
 format.name$ -- 9
-if$ -- 127
+if$ -- 179
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 1
-newline$ -- 10
+newline$ -- 15
 num.names$ -- 3
-pop$ -- 7
+pop$ -- 19
 preamble$ -- 1
-purify$ -- 8
+purify$ -- 13
 quote$ -- 0
-skip$ -- 22
+skip$ -- 30
 stack$ -- 0
-substring$ -- 37
-swap$ -- 11
+substring$ -- 43
+swap$ -- 13
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 8
-warning$ -- 0
+type$ -- 16
+warning$ -- 2
 while$ -- 5
-width$ -- 2
-write$ -- 18
+width$ -- 3
+write$ -- 29
+(There were 2 warnings)

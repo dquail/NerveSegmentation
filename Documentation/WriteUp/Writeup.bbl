@@ -1,5 +1,10 @@
 \begin{thebibliography}{}
 
+\bibitem[\protect\citeauthoryear{kag}{}]{kagglenerve}
+Kaggle nerve segmentation challenge.
+\newblock https://www.kaggle.com/c/ultrasound-nerve-segmentation.
+\newblock Accessed: 2017-11-05.
+
 \bibitem[\protect\citeauthoryear{Ronneberger, Fischer, \&
   Brox}{2015}]{ronneberger2015u}
 Ronneberger, O.; Fischer, P.; and Brox, T.
