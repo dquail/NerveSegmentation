@@ -1,5 +1,18 @@
 \begin{thebibliography}{}
 
+\bibitem[\protect\citeauthoryear{Badrinarayanan, Kendall, \&
+  Cipolla}{2015}]{badrinarayanan2015segnet}
+Badrinarayanan, V.; Kendall, A.; and Cipolla, R.
+\newblock 2015.
+\newblock Segnet: A deep convolutional encoder-decoder architecture for image
+  segmentation.
+\newblock {\em arXiv preprint arXiv:1511.00561}.
+
+\bibitem[\protect\citeauthoryear{git}{}]{githubrepo}
+Project source code repository.
+\newblock https://github.com/dquail/NerveSegmentation.
+\newblock Accessed: 2017-11-20.
+
 \bibitem[\protect\citeauthoryear{kag}{}]{kagglenerve}
 Kaggle nerve segmentation challenge.
 \newblock https://www.kaggle.com/c/ultrasound-nerve-segmentation.

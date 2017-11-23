@@ -43,13 +43,15 @@ These networks are known to be shift and space invariant and can learn filters t
   \label{fig:cnnarchitecture}
 \end{figure}
 
-In this paper, we explore using a convolutional neural networks (CNN) to segment these ultrasound images. A UNET structure is considered the strongest for medical images because it applies a fully connected convolutional network architecture in a way that makes the most use out of limited data, We will tune parameters within the UNET and compare its  performance to a simple Segnet structure 
+In this paper, we explore using a convolutional neural networks (CNN) to segment these ultrasound images. A UNET structure is considered the strongest for medical images because it applies a fully connected convolutional network architecture in a way that makes the most use out of limited data.\cite{ronneberger2015u} We will tune parameters within the UNET and compare its  performance to a simple Segnet structure 
 
 \section{Experimental Setup}
 For the task of segmenting MRI data using our convolution neural network, we needed to consider the training data, as well as the network infrastructure for training and prediction.
 
 \subsection{The data}
 A Kaggle competition in 2016 \cite{kagglenerve} made available a large training set of images where the Brachial Plexus (BP) nerve has been manually annotated in ultrasound images. The annotators were trained by experts and instructed to annotate images where they were confident about the existence of the BP landmark.. This data set includes images where the BP is not present, and as with any human-labeled data, will contain noise, artifacts, and potential mistakes from the ground truth. 
+
+The total number of labelled examples within the Kaggle data is 5635. We split that data into 80 percent training, and 20 percent test examples. This results in 4508 training examples, and 1127 test examples. 
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/1_4.png}}
@@ -70,7 +72,7 @@ A Kaggle competition in 2016 \cite{kagglenerve} made available a large training 
 \end{figure}
 
 \subsection{CNN Implementation libraries}
-In order to build the different convolutional neural networks used to segment the ultrasound images, we wanted to use a high-level neural network API that enabled fast experimentation. The Keras API library is one such solution, and the one we chose. Keras is written in Python and is capable of running on top of TensorFlow - an open source software library for numerical computation using data flow graphs. Keras and TensorFlow support both convolutional networks and runs seamlessly on CPU and GPU. 
+In order to build the different convolutional neural networks used to segment the ultrasound images, we wanted to use a high-level neural network API that enabled fast experimentation. The Keras API library is one such solution, and the one we chose. Keras is written in Python and is capable of running on top of TensorFlow - an open source software library for numerical computation using data flow graphs. Keras and TensorFlow support both convolutional networks and runs seamlessly on CPU and GPU. Full code for the experiments can be found in the github repository. \cite{githubrepo}
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/Keras.png}}
@@ -189,8 +191,15 @@ Although a strength of UNET architectures is their supposed ability to perform a
 
 Keras was used to apply transformations in the following manner:
 
-Data augmentation here
-
+\begin{lstlisting}
+datagen = ImageDataGenerator(
+    featurewise\_center=True,
+    featurewise\_std\_normalization=True,
+    rotation\_range=20,
+    width\_shift\_range=0.2,
+    height\_shift\_range=0.2,
+    horizontal\_flip=True)
+\end{lstlisting}
 The descriptions for the augmentation variables are as follows:
 
 \begin{itemize}
@@ -199,6 +208,9 @@ The descriptions for the augmentation variables are as follows:
   \item height\_shift\_range = Range for random vertical shifts. (fraction of total height)
   \item shear\_range = Shear Intensity (Shear angle in counter-clockwise direction as radians)
   \item zoom\_range = Range for random zoom.
+  \item featurewise\_std\_normalization = Divide inputs by std of the dataset, feature-wise.
+  \item featurewise\_center = Set each sample mean to 0.
+  \item horizontal\_flip = Randomly flip inputs horizontally.
 \end{itemize}
 
 With data augmentation, the DCF improves to 0.698.
@@ -210,7 +222,7 @@ With data augmentation, the DCF improves to 0.698.
 \end{figure}
 
 \subsection{Segnet}
-As stated before, a UNET architecture is generally considered to be the most appropriate architecture for medical images because of the ability to make accurate predictions with relatively low volumes of training data. So we wanted to compare the results with a more basic fully connected convolutional neural network. A basic Segnet architecture was used for our training purposes. It is not the intention of this paper to go into depth about the structure of a Segnet. More information can be found on the subject in other papers such as "SegNet: A Deep Convolutional Encoder-Decoder Architecture for Image Segmentation." However, it is worth giving a very basic description of a SegNet. 
+As stated before, a UNET architecture is generally considered to be the most appropriate architecture for medical images because of the ability to make accurate predictions with relatively low volumes of training data. So we wanted to compare the results with a more basic fully connected convolutional neural network. A basic Segnet architecture was used for our training purposes. It is not the intention of this paper to go into depth about the structure of a Segnet. More information can be found on the subject in other papers such as "SegNet: A Deep Convolutional Encoder-Decoder Architecture for Image Segmentation." \cite{badrinarayanan2015segnet} However, it is worth giving a very basic description of a SegNet. 
 
 A novelty of SegNet  is the way in which the decoder upsamples its lower resolution input feature maps. The decoder uses pooling indices computed in the max-pooling step of the corresponding encoder to perform upsampling. By doing so, the need for learning to upsample is removed. The resulting upsampled maps are then convolved with trainable filters producing dense feature maps. 
 
@@ -221,7 +233,7 @@ A novelty of SegNet  is the way in which the decoder upsamples its lower resolut
 \end{figure}
 
 
-With no data augmentation, the Segnet architecture was able to score a DCF of 0.54 after training of 20 epochs. This is quite close to the UNET architecture which was somewhat surprising. The reason that they may be close is likely in the fact that the training data is actually quite significant in this challenge. The strength of the UNET architecture is in that it requires very few training examples.
+Credit to Divam Gupta for providing keras code to implement the Segnet. \cite{segnetimplementation}With no data augmentation, the Segnet architecture was able to score a DCF of 0.54 after training of 20 epochs. This is quite close to the UNET architecture which was somewhat surprising. The reason that they may be close is likely in the fact that the training data is actually quite significant in this challenge. The strength of the UNET architecture is in that it requires very few training examples.
 
 
  \begin{figure}[H]
@@ -230,10 +242,10 @@ With no data augmentation, the Segnet architecture was able to score a DCF of 0.
   \label{fig:trainingovertime2.}
 \end{figure}
 
+\subsection{UNET with only 100 training examples}
 To further test the idea that the UNET architecture remains performant on minimal data, we decreased the test data by an order of magnitude and re-ran training and prediction for both UNET and Segnet architectures. 
 
-\subsection{UNET with only 100 training examples}
-Given only 100 training examples rather than 2300, the UNET architectures performance decreased by 5 percent to a DCF of 0.53. 
+Given only 100 training examples rather than 4508, the UNET architectures performance decreased by 5 percent to a DCF of 0.53. 
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Plots/SegNet.png}}
