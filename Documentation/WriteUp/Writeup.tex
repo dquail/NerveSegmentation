@@ -17,7 +17,7 @@ Pain management through the use of indwelling catheters that block or mitigate p
     
 \section{Background}
 
-Pain control in post surgery settings is a priority for health care providers. In addition to keeping the patient comfortable, pain management has other benefits. Pain control can help speed recover and may reduce the risk of developing certain complications after surgery, including blood clots and pneumonia. This is because, if pain is controlled, patients will be more able to complete tasks such as walking and deep breathing exercises.
+Pain control in post surgery settings is a priority for health care providers. In addition to keeping the patient comfortable, pain management has other benefits. Pain control can help speed recovery and may reduce the risk of developing certain complications after surgery, including blood clots and pneumonia. This is because, if pain is controlled, patients will be more able to complete tasks such as walking and deep breathing exercises.
 
 The most common treatment of pain is the administration of narcotics. But these narcotics have a significant downside. These side effects include nausea, itching, and drowsiness. 
 
@@ -35,8 +35,6 @@ A convolutional neural network (CNN) is a class of deep, feed forward artificial
 
 These networks are known to be shift and space invariant and can learn filters that were hand engineered in traditional algorithms. This independence from prior knowledge and human effort in feature design makes them an excellent candidate for an approach to automatic segmentation of nerves in ultrasound images. 
 
-
-
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/TypicalCNN.png}}
   \caption{Typical CNN Architecture.}
@@ -49,7 +47,7 @@ In this paper, we explore using a convolutional neural networks (CNN) to segment
 For the task of segmenting MRI data using our convolution neural network, we needed to consider the training data, as well as the network infrastructure for training and prediction.
 
 \subsection{The data}
-A Kaggle competition in 2016 \cite{kagglenerve} made available a large training set of images where the Brachial Plexus (BP) nerve has been manually annotated in ultrasound images. The annotators were trained by experts and instructed to annotate images where they were confident about the existence of the BP landmark.. This data set includes images where the BP is not present, and as with any human-labeled data, will contain noise, artifacts, and potential mistakes from the ground truth. 
+A Kaggle competition in 2016 \cite{kagglenerve} made available a large training set of black and white images where the Brachial Plexus (BP) nerve has been manually annotated in ultrasound images. The annotators were trained by experts and instructed to annotate images where they were confident about the existence of the BP landmark.. This data set includes images where the BP is not present, and as with any human-labeled data, will contain noise, artifacts, and potential mistakes from the ground truth. 
 
 The total number of labelled examples within the Kaggle data is 5635. We split that data into 80 percent training, and 20 percent test examples. This results in 4508 training examples, and 1127 test examples. 
 
@@ -99,7 +97,7 @@ It's overall architecture is illustrated above. Like any convolutional neural ne
 
 Each blue box corresponds to a multi channel feature layer. Most of the operations are convolutions followed by a non-linear feature activation. 
 
-Below is a diagram detailing one of the first convolution layer. The layer contains of the standard 3X3 convolution followed by a non-linear activation function. By design, only the valid part of the convolution is used, which means that for a 3X3 convolution, a 1 pixel border is lost. This allows large images to be processed in smaller tiles. 	
+Below is a diagram detailing one of the first convolution layer. The layer contains a standard 3X3 convolution followed by a non-linear activation function. By design, only the valid part of the convolution is used, which means that for a 3X3 convolution, a 1 pixel border is lost. This allows large images to be processed in smaller tiles. 	
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Images/UNET1.png}}
@@ -172,8 +170,6 @@ After the model has been trained, a mask is created for each test image. Example
   \label{fig:BPSegmentation3}
 \end{figure}
 
-The dice coefficient (DCF) is used for a performance measure as well as the loss function. 
-
 \subsection{Basic UNET}
 A basic UNET architecture as described in the 2 Dimensional UNET section above was used first. As with all experiments, the Kaggle training data was split into 4508 training examples (80 percent) and 1127 test examples (20 percent).  The CNN was trained against the training set and the its performance measured using the test examples. 
 
@@ -200,6 +196,7 @@ datagen = ImageDataGenerator(
     height\_shift\_range=0.2,
     horizontal\_flip=True)
 \end{lstlisting}
+
 The descriptions for the augmentation variables are as follows:
 
 \begin{itemize}
@@ -217,8 +214,8 @@ With data augmentation, the DCF improves only slightly to 0.698. This is somewha
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Plots/UNETSimple20Augmented.png}}
-  \caption{The learning rate when augmenting the image data using keras data augmentation abilities over 20 epochs of training.}
-  \label{fig:unet3}
+  \caption{The learning rate when augmenting the image data using Keras data augmentation abilities over 20 epochs of training.}
+  \label{fig:unet3aug}
 \end{figure}
 
 \subsection{Segnet}
@@ -233,13 +230,12 @@ A novelty of SegNet  is the way in which the decoder upsamples its lower resolut
 \end{figure}
 
 
-Credit to Divam Gupta for providing keras code to implement the Segnet. \cite{segnetimplementation}With no data augmentation, the Segnet architecture was able to score a DCF of 0.54 after training of 20 epochs. This is quite close to the UNET architecture which was somewhat surprising. The reason that they may be close is likely in the fact that the training data is actually quite significant in this challenge. The strength of the UNET architecture is in that it requires very few training examples.
-
+Credit to Divam Gupta for providing Keras code to implement the Segnet. \cite{segnetimplementation}With no data augmentation, the Segnet architecture was able to score a DCF of 0.54 after training of 20 epochs. This is quite close to the UNET architecture which was somewhat surprising. The reason that they may be close is likely in the fact that the training data is actually quite significant in this challenge mitigating the supposed strength of the UNET.
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Plots/SegNet.png}}
   \caption{Accuracy using a Segnet architecture is comparable to a UNET architecture}
-  \label{fig:trainingovertime2.}
+  \label{fig:trainingSegnet.}
 \end{figure}
 
 \subsection{UNET with only 100 training examples}
@@ -266,31 +262,10 @@ The UNET was trained with training sizes of 100, 750, 1250, 2500, and 4509 and i
 
 As you can see, the UNET starts to perform reasonably well once the data set gets to 2500. But poorly before hand. 
 
-\subsection{Overall comparisons}
-Overall, the UNET architecture performed best. But it's strength was demonstrated when applied to a minimal amount of training examples. 
-
-\begin{tabular}{ |p{1.5cm}||p{2cm}|p{1.5cm}|p{1cm}|  }
- \hline
- \multicolumn{3}{|c|}{Results after trainingt} \\
- \hline
-Network    & Training size & Augment & DCF \\
- \hline
- UNET   & 2399    & NO & 0.54\\
- UNET   & 2399    & YES & 0.59\\
- UNET   & 100    & NO & 0.51\\ 
- Segnet   & 2399    & NO & 0.54\\
- Segnet   & 2399    & YES & 0.59\\
- Segnet   & 100    & NO & 0.51\\ 
- \hline
-\end{tabular}
-
-
-
 \section{Conclusions}
 When using the entire training set, results from the UNET architecture are promising and demonstrate it's strengths in medical image segmentation. It outperformed a competitive network architecture - the Segnet. Without having tried all of the competitive network architectures, we can not conclude that the UNET is the best architecture for the task of nerve segmentation of ultrasounds, but it is fair to conclude its promise. 
 
 A second conclusion involves the amount of training examples used for a UNET. Given small amounts of training data, the UNET didn't perform well at all. The original UNET paper demonstrated it's ability to perform well using just 30 training images. But our network performed very poorly with over 10 times more training examples than what was used in the original paper. This was unexpected, but demonstrates the difference between image types. Ultrasound images are notorious for containing more noise, so perhaps require much more training examples than if the images were electronic microscopic recordings. So we can conclude that while the UNET may perform well with limited training examples, it doesn't perform well in all settings. The nature of the images matters a lot.
-
 
 \section{Future work}
 Our experiments showed a best DCF score of 0.59, which is significantly lower than the best score during the Kaggle competition which was 0.73226. Part of this is because entries of the competition used all 100 percent of the examples to train the model, whereas we had to reserve 20 percent of our data for test. That said, we don't expect that using the entire data set for training would have resulted in the best score for the competition. So there would still be lots of future work left to bring our UNET to a best in class structure. 
