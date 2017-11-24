@@ -28,3 +28,22 @@ def augmentedUNET():
 def segNET():
     a = [0.030, 0.36, 0.378, 0.413, 0.414, 0.419, 0.423, 0.46, 0.498, 0.50, 0.503, 0.506, 0.515, 0.519, 0.55, 0.589, 0.599, 0.620, 0.639, 0.642]
     make_plot(a, "UNET CNN with Augmentation", "Performance over epoch")
+    
+def make_plot_comparison():
+    print("Making plot")
+    fig = plt.figure(1)
+    x1Values = [1,4,5,8,9]
+    y1Values = [1,2,3,4,5]
+    y2Values = [5,4,3,2,1]
+    fig.suptitle("mainTitle", fontsize=14, fontweight='bold')
+    ax = fig.add_subplot(211)
+    titleLabel = "subtitle"
+    ax.set_title(titleLabel)
+    ax.set_xlabel('Epoch')
+    ax.set_ylabel('Dice co-efficient')
+
+    ax.plot(x1Values, y1Values, label = "100 examples")
+    ax.plot(x1Values, y2Values, label = "1000 examples")
+    ax.legend()
+    #ax.plot(optimalActionsNonStationary)
+    plt.show()    

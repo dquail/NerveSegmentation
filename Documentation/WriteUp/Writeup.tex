@@ -175,7 +175,7 @@ After the model has been trained, a mask is created for each test image. Example
 The dice coefficient (DCF) is used for a performance measure as well as the loss function. 
 
 \subsection{Basic UNET}
-A basic UNET architecture as described in the 2 Dimensional UNET section above was used first. As with all experiments, the Kaggle training data was split into training examples (80 percent) and test examples (20 percent).  The CNN was trained against the training set and the its performance measured using the test examples. 
+A basic UNET architecture as described in the 2 Dimensional UNET section above was used first. As with all experiments, the Kaggle training data was split into 4508 training examples (80 percent) and 1127 test examples (20 percent).  The CNN was trained against the training set and the its performance measured using the test examples. 
 
 For our initial UNET architecture, a DCF of 0.58 is achieved after 20 epochs of training with batch sizes of 32. 
 
@@ -213,7 +213,7 @@ The descriptions for the augmentation variables are as follows:
   \item horizontal\_flip = Randomly flip inputs horizontally.
 \end{itemize}
 
-With data augmentation, the DCF improves to 0.698.
+With data augmentation, the DCF improves only slightly to 0.698. This is somewhat surprising that transforming and augmenting the training data had such little effect.
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Plots/UNETSimple20Augmented.png}}
@@ -243,9 +243,9 @@ Credit to Divam Gupta for providing keras code to implement the Segnet. \cite{se
 \end{figure}
 
 \subsection{UNET with only 100 training examples}
-To further test the idea that the UNET architecture remains performant on minimal data, we decreased the test data by an order of magnitude and re-ran training and prediction for both UNET and Segnet architectures. 
+To further test the idea that the UNET architecture remains performant on minimal data, we decreased the test data too 100. The original UNET paper experimented using only 30 512X512 images of electron microscopic recordings. So our 100 seems generous. 
 
-Given only 100 training examples rather than 4508, the UNET architectures performance decreased by 5 percent to a DCF of 0.53. 
+However, with only 100 training examples, our U-Net performance was incredibly poor. It's dice coefficient dropped to 0.02 after the 20th epoch.
 
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Plots/SegNet.png}}
@@ -253,14 +253,18 @@ Given only 100 training examples rather than 4508, the UNET architectures perfor
   \label{fig:trainingovertime2.}
 \end{figure}
 
-\subsection{Segnet with only 100 training examples}
-Given only 100 training examples, the performance of the Segnet architecture suffers much more than the UNET architecture did under similar training example constraints. The performance went from a DCF of 0.54 to 0.42.
- 
+\subsection{UNET with different sizes}
+The fact that the UNET performed so poorly given 100 training examples is somewhat surprising, given it's supposed strengths. With 4509 training examples, our UNET performed well, but at 100, it performed very poorly. This inspired a set of experiments testing the UNET at with training sets of sizes between these two extremes to see where the performance started to become acceptable. 
+
+The UNET was trained with training sizes of 100, 750, 1250, 2500, and 4509 and it's performance characteristics plotted accordingly. 
+
  \begin{figure}[H]
   \centerline{\includegraphics[width=0.5\textwidth]{Plots/SegNet.png}}
   \caption{Accuracy of a UNET with less training data. Note that the performance is not impacted as much with less data.}
   \label{fig:trainingovertime2.}
 \end{figure}
+
+As you can see, the UNET starts to perform reasonably well once the data set gets to 2500. But poorly before hand. 
 
 \subsection{Overall comparisons}
 Overall, the UNET architecture performed best. But it's strength was demonstrated when applied to a minimal amount of training examples. 
@@ -283,11 +287,15 @@ Network    & Training size & Augment & DCF \\
 
 
 \section{Conclusions}
-The results using a UNET architecture are promising and demonstrate it's strengths in medical image segmentation. Given small amounts of training data, it out performed the Segnet architecture, which is unsurprising. With large amounts of data, it still outperformed the Segnet by a significant margin, which is somewhat surprising. Our experiments showed a best DCF score of 0.59, which is significantly lower than the best score during the Kaggle competition which was 0.73226. Our score would have placed us just inside the top 100 out of over 900 entries. So there would still be lots of work left to bring our UNET to a best in class structure. That said, the purpose of this research wasn't necessarily to create the best performance on this segmentation task. But rather to compare different CNN architectures. Specifically the architecture specifically designed for medical images, with a more generic simpler segmentation architecture. While not creating a world class CNN for this segmentation task, our findings demonstrate some of the strengths of a UNET for segmentation of medical images. 
+When using the entire training set, results from the UNET architecture are promising and demonstrate it's strengths in medical image segmentation. It outperformed a competitive network architecture - the Segnet. Without having tried all of the competitive network architectures, we can not conclude that the UNET is the best architecture for the task of nerve segmentation of ultrasounds, but it is fair to conclude its promise. 
+
+A second conclusion involves the amount of training examples used for a UNET. Given small amounts of training data, the UNET didn't perform well at all. The original UNET paper demonstrated it's ability to perform well using just 30 training images. But our network performed very poorly with over 10 times more training examples than what was used in the original paper. This was unexpected, but demonstrates the difference between image types. Ultrasound images are notorious for containing more noise, so perhaps require much more training examples than if the images were electronic microscopic recordings. So we can conclude that while the UNET may perform well with limited training examples, it doesn't perform well in all settings. The nature of the images matters a lot.
 
 
 \section{Future work}
-To truly demonstrate the UNETs as a leader for medical images, it needs to be compared against many more network architectures, beyond just the Segnet. The list of competitive networks isn't short; just some of the other networks include:
+Our experiments showed a best DCF score of 0.59, which is significantly lower than the best score during the Kaggle competition which was 0.73226. Part of this is because entries of the competition used all 100 percent of the examples to train the model, whereas we had to reserve 20 percent of our data for test. That said, we don't expect that using the entire data set for training would have resulted in the best score for the competition. So there would still be lots of future work left to bring our UNET to a best in class structure. 
+
+The main purpose of this research wasn't necessarily to create the best performance on this segmentation task. It was to assess the appropriateness of a UNET architecture for this segmentation task. While we demonstrated it's promise, we can't conclude it's the leader until we test it against all other competitive architectures. The list of competitive networks isn't short; just some of the other networks include:
 \begin{itemize}
   \item Fully Convolutional Network 8, 16, 32
   \item Fully Convolutional DenseNet
