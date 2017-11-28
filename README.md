@@ -13,4 +13,4 @@ A promising alternative to pain control is creating a nerve block. Unlike an epi
 
 Creating a nerve block is done by using a needle to place a small catheter in the appropriate region. The main challenge in doing so is isolating the appropriate insertion place. Current methods involve using an ultrasound in real time to identify a nerve structure such as the brachial plexus. This requires the knowledge of a highly trained radiologist, and even then, is error prone. For these reasons, a less manual, and more accurate approach is desired. 
 
-![alt text](WriteUp/images/UltrasoundNerve.png "Ultrasound nerve")
+![alt text](Documentation/WriteUp/images/UltrasoundNerve.png "Ultrasound nerve")
