@@ -27,4 +27,9 @@ Ronneberger, O.; Fischer, P.; and Brox, T.
   Computer-Assisted Intervention},  234--241.
 \newblock Springer.
 
+\bibitem[\protect\citeauthoryear{seg}{}]{segnetimplementation}
+Segnet implementation.
+\newblock https://github.com/divamgupta/image-segmentation-keras.
+\newblock Accessed: 2017-11-20.
+
 \end{thebibliography}

@@ -3,50 +3,51 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: Writeup.aux
 The style file: aaai.bst
 Database file #1: bibliography.bib
-Warning--I didn't find a database entry for "segnetimplementation"
 Warning--to sort, need author or key in kagglenerve
 Warning--to sort, need author or key in githubrepo
+Warning--to sort, need author or key in segnetimplementation
 Warning--empty year in githubrepo
 Warning--empty year in kagglenerve
-You've used 4 entries,
+Warning--empty year in segnetimplementation
+You've used 5 entries,
             2568 wiz_defined-function locations,
-            594 strings with 5239 characters,
-and the built_in function-call counts, 1375 in all, are:
-= -- 147
-> -- 38
+            596 strings with 5314 characters,
+and the built_in function-call counts, 1604 in all, are:
+= -- 171
+> -- 39
 < -- 1
 + -- 12
 - -- 12
-* -- 98
-:= -- 202
-add.period$ -- 17
-call.type$ -- 4
-change.case$ -- 22
-chr.to.int$ -- 4
-cite$ -- 10
-duplicate$ -- 58
-empty$ -- 114
+* -- 114
+:= -- 229
+add.period$ -- 20
+call.type$ -- 5
+change.case$ -- 26
+chr.to.int$ -- 5
+cite$ -- 14
+duplicate$ -- 68
+empty$ -- 140
 format.name$ -- 18
-if$ -- 297
+if$ -- 349
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 2
-newline$ -- 26
+newline$ -- 31
 num.names$ -- 6
-pop$ -- 37
+pop$ -- 49
 preamble$ -- 1
-purify$ -- 26
+purify$ -- 31
 quote$ -- 0
-skip$ -- 48
+skip$ -- 55
 stack$ -- 0
-substring$ -- 54
-swap$ -- 17
+substring$ -- 60
+swap$ -- 19
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 32
-warning$ -- 4
+type$ -- 40
+warning$ -- 6
 while$ -- 7
-width$ -- 6
-write$ -- 53
-(There were 5 warnings)
+width$ -- 8
+write$ -- 64
+(There were 6 warnings)
