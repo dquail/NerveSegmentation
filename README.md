@@ -2,7 +2,7 @@
 Using Convolutional Neural Networks to automatically segment nerves from ultrasound images
 
 ## Abstract
-Pain management through the use of indwelling catheters that block or mitigate pain source, is a promising alternative to narcotics, which bring on sevral unwanted side effects. Accurate identification of nerve structures in ultrasound images is a fundamental step in effectively inserting a catheter into a patient requiring pain management. In this paper, we look into [using a UNET convolutional neural network’s ability to segment the brachial plexus from an ultrasound image] (https://arxiv.org/abs/1505.04597) of a patient, and compare it with a more traditional type of convolutional neural network performing the same segmentation task.
+Pain management through the use of indwelling catheters that block or mitigate pain source, is a promising alternative to narcotics, which bring on sevral unwanted side effects. Accurate identification of nerve structures in ultrasound images is a fundamental step in effectively inserting a catheter into a patient requiring pain management. In this paper, we look into [using a UNET convolutional neural network’s ability to segment the brachial plexus from an ultrasound image](https://arxiv.org/abs/1505.04597) of a patient, and compare it with a more traditional type of convolutional neural network performing the same segmentation task.
 
 ## Background
 Pain control in post surgery settings is a priority for health care providers. In addition to keeping the patient comfortable, pain management has other benefits. Pain control can help speed recovery and may reduce the risk of developing certain complications after surgery, including blood clots and pneumonia. This is because, if pain is controlled, patients will be more able to complete tasks such as walking and deep breathing exercises.
@@ -45,7 +45,7 @@ The human labelled mask for the ultrasound of the BP.
 An ultrasound image where there is no BP. The resulting BP labelled mask will contain no segmented data.
 
 ## CNN Implementation libraries
-In order to build the different convolutional neural networks used to segment the ultrasound images, we wanted to use a high-level neural network API that enabled fast experimentation. The [Keras API library] (https://keras.io/) is one such solution, and the one we chose. Keras is written in Python and is capable of running on top of TensorFlow - an open source software library for numerical computation using data flow graphs. Keras and TensorFlow support both convolutional networks and runs seamlessly on CPU and GPU.
+In order to build the different convolutional neural networks used to segment the ultrasound images, we wanted to use a high-level neural network API that enabled fast experimentation. The [Keras API library](https://keras.io/) is one such solution, and the one we chose. Keras is written in Python and is capable of running on top of TensorFlow - an open source software library for numerical computation using data flow graphs. Keras and TensorFlow support both convolutional networks and runs seamlessly on CPU and GPU.
 
 Experiments were run using an Amazon EC2 instance with a GPU using cuDNN - a deep neural network GPU accelerated library. This approach is much faster than a typical CPU because of the parallel computation it was designed form,
 
@@ -100,12 +100,15 @@ For each experiment, the training examples were randomly split. 80 percent were 
 After the model has been trained, a mask is created for each test image. Examples of such masks are seen below.
 
 ![alt text](Documentation/WriteUp/Images/SegmentExample1.png "Segment example")
+
 An example of a resulting image segmentation. For the purposes of illustration, the area inside the red circle is the area that has been segmented as the BP
 
 ![alt text](Documentation/WriteUp/Images/SegmentExample2.png "Segment 2 example")
+
 A second example of the BP segmentation.
 
 ![alt text](Documentation/WriteUp/Images/SegmentExample3.png "Segment 3 example")
+
 A third example of a BP segmentation.
 
 ## Basic UNET
