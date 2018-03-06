@@ -28,7 +28,7 @@ In this paper, we explore using a convolutional neural networks (CNN) to segment
 For the task of segmenting MRI data using our convolution neural network, we needed to consider the training data, as well as the network infrastructure for training and prediction.
 
 ## The data
-A Kaggle competition in 2016 made available a large training set of black and white images where the Brachial Plexus (BP) nerve has been manually annotated in ultrasound images. The annotators were trained by experts and instructed to annotate images where they were confident about the existence of the BP landmark.. This data set includes images where the BP is not present, and as with any human-labeled data, will contain noise, artifacts, and potential mistakes from the ground truth. 
+[A Kaggle competition in 2016](https://www.kaggle.com/c/ultrasound-nerve-segmentation) made available a large training set of black and white images where the Brachial Plexus (BP) nerve has been manually annotated in ultrasound images. The annotators were trained by experts and instructed to annotate images where they were confident about the existence of the BP landmark.. This data set includes images where the BP is not present, and as with any human-labeled data, will contain noise, artifacts, and potential mistakes from the ground truth. 
 
 The total number of labelled examples within the Kaggle data is 5635. We split that data into 80 percent training, and 20 percent test examples. This results in 4508 training examples, and 1127 test examples. 
 
@@ -116,7 +116,7 @@ A basic UNET architecture as described in the 2 Dimensional UNET section above w
 
 For our initial UNET architecture, a DCF of 0.63 is achieved after 20 epochs of training with batch sizes of 32. 
 
-![alt text](Documentation/WriteUp/Images/UNETSimple20.png "UNET Simple 20")
+![alt text](Documentation/WriteUp/Plots/UNETSimple20.png "UNET Simple 20")
 
 The learning curve over 20 epochs of training for a CNN with a basic UNET architecture.
 
@@ -163,6 +163,7 @@ The architecture of a Segnet architecture.
 Credit to Divam Gupta for providing [Keras code to implement the Segnet](https://github.com/divamgupta/image-segmentation-keras). With no data augmentation, the Segnet architecture was able to score a DCF of 0.60 after training of 20 epochs. This is quite close to the UNET architecture which was somewhat surprising. The reason that they may be close is likely in the fact that the training data is actually quite significant in this challenge mitigating the supposed strength of the UNET.
 
 ![alt text](Documentation/WriteUp/Plots/SegNet.png "Segnet plots")
+
 Accuracy using a Segnet architecture is comparable to a UNET architecture.
 
 ## UNET with only 100 training examples
